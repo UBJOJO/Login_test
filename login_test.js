@@ -1,12 +1,20 @@
 var express = require('express');
 var session = require('express-session');
+var MySQLStore = require('express-mysql-session')(session);
 var bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
   secret: 'djqiowjd2212@@!sd32dk9023kjd09j',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  store:new MySQLStore({
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: 'root',
+    database: 'o2'
+  })
 }));
 
 app.get('/count', function(req, res){
